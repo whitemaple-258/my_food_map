@@ -701,7 +701,7 @@ class _MapScreenState extends State<MapScreen> {
       );
       final headers = {
         'Content-Type': 'application/json',
-        'X-Goog-Api-Key': googleApiKey,
+        'X-Goog-Api-Key': AppConstants.googleApiKey,
         'X-Goog-FieldMask':
             'places.displayName,places.formattedAddress,places.location',
       };
@@ -1099,7 +1099,7 @@ class _MapScreenState extends State<MapScreen> {
       );
       final headers = {
         'Content-Type': 'application/json',
-        'X-Goog-Api-Key': googleApiKey,
+        'X-Goog-Api-Key': AppConstants.googleApiKey,
         'X-Goog-FieldMask': 'places.displayName',
       };
       final body = json.encode({

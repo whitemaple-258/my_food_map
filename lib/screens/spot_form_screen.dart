@@ -150,7 +150,7 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
     final url = Uri.parse('https://places.googleapis.com/v1/places:searchText');
     final headers = {
       'Content-Type': 'application/json',
-      'X-Goog-Api-Key': googleApiKey,
+      'X-Goog-Api-Key': AppConstants.googleApiKey,
       'X-Goog-FieldMask':
           'places.displayName,places.formattedAddress,places.location',
     };
