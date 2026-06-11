@@ -49,7 +49,12 @@ app.*.map.json
 
 # Androidのローカル設定
 android/local.properties
+
+# 機密情報・APIキーを含むファイル (各自で生成・配置が必要)
+# *.example ファイルはテンプレートとして公開する
 .env
 .env.*
+!.env.example
 google-services.json
 GoogleService-Info.plist
+lib/firebase_options.dart
