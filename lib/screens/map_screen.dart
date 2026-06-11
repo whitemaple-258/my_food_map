@@ -487,36 +487,34 @@ class _MapScreenState extends State<MapScreen> {
       var data = MetadataParser.parse(document);
 
       // B. 解析結果からタイトルを探す
-      if (data != null) {
-        String? title = data.title;
-        String? desc = data.description;
+      String? title = data.title;
+      String? desc = data.description;
 
-        print("取得タイトル: $title");
-        print("取得説明文: $desc");
+      print("取得タイトル: $title");
+      print("取得説明文: $desc");
 
-        // タイトルがまともなら採用
-        if (title != null && title != "Google マップ" && title.isNotEmpty) {
-          // ゴミ除去 ("店名 - Google マップ" -> "店名")
-          return title.replaceAll(" - Google マップ", "").trim();
-        }
+      // タイトルがまともなら採用
+      if (title != null && title != "Google マップ" && title.isNotEmpty) {
+        // ゴミ除去 ("店名 - Google マップ" -> "店名")
+        return title.replaceAll(" - Google マップ", "").trim();
+      }
 
-        // タイトルがダメなら、説明文(description)から探す
-        // descriptionは "★★★★☆ · ラーメン屋 · 〇〇区..." のようになっていることが多い
-        if (desc != null && desc.contains("·")) {
-          // "·" で区切って、店名っぽい部分（評価の次あたり）を探す
-          // Googleマップのdescription形式に依存しますが、最後の手段として有効
-          List<String> parts = desc.split("·");
-          for (String part in parts) {
-            String candidate = part.trim();
-            // 明らかにジャンルや住所でないものを店名と推測（簡易的）
-            if (candidate.length > 1 && !candidate.contains("★")) {
-              print("説明文から推測: $candidate");
-              return candidate;
-            }
+      // タイトルがダメなら、説明文(description)から探す
+      // descriptionは "★★★★☆ · ラーメン屋 · 〇〇区..." のようになっていることが多い
+      if (desc != null && desc.contains("·")) {
+        // "·" で区切って、店名っぽい部分（評価の次あたり）を探す
+        // Googleマップのdescription形式に依存しますが、最後の手段として有効
+        List<String> parts = desc.split("·");
+        for (String part in parts) {
+          String candidate = part.trim();
+          // 明らかにジャンルや住所でないものを店名と推測（簡易的）
+          if (candidate.length > 1 && !candidate.contains("★")) {
+            print("説明文から推測: $candidate");
+            return candidate;
           }
         }
       }
-    } catch (e) {
+        } catch (e) {
       print("解析エラー: $e");
     }
     return null;
@@ -536,8 +534,9 @@ class _MapScreenState extends State<MapScreen> {
 
     try {
       LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied)
+      if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
+      }
       if (permission != LocationPermission.denied &&
           permission != LocationPermission.deniedForever) {
         final position = await Geolocator.getCurrentPosition(
@@ -556,8 +555,9 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     if (mounted) Navigator.pop(context);
-    if (mounted)
+    if (mounted) {
       _showRegisterMenu(targetPos, fromShare: true, sharedImages: imagePaths);
+    }
   }
 
   Future<void> _checkLostData() async {
@@ -913,7 +913,6 @@ class _MapScreenState extends State<MapScreen> {
     bool noImage = false,
     String? initialTitle,
     List<String>? initialImagePaths,
-    String? initialComment,
   }) async {
     List<String> pickedImagePaths = initialImagePaths ?? [];
     if (!_isWantToGoMode && !noImage && initialImagePaths == null) {
