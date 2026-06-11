@@ -129,7 +129,6 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
 
   // ... (途中の _pickImages, _getPlaceSuggestions, _updateLocationFromSelection は変更なし) ...
   Future<void> _pickImages({required bool fromCamera}) async {
-    await Future.delayed(Duration.zero);
     List<XFile> files = [];
     if (fromCamera) {
       final file = await ImageHelper().pickImageFromCamera();
@@ -150,7 +149,7 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
     final url = Uri.parse('https://places.googleapis.com/v1/places:searchText');
     final headers = {
       'Content-Type': 'application/json',
-      'X-Goog-Api-Key': googleApiKey,
+      'X-Goog-Api-Key': AppConstants.googleApiKey,
       'X-Goog-FieldMask':
           'places.displayName,places.formattedAddress,places.location',
     };
@@ -184,7 +183,7 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
         }
       }
     } catch (e) {
-      print("候補取得エラー: $e");
+      debugPrint("候補取得エラー: $e");
     }
     return [];
   }
@@ -201,7 +200,7 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
         newPrefecture = placemarks.first.administrativeArea ?? '';
       }
     } catch (e) {
-      print("逆ジオコーディングエラー: $e");
+      debugPrint("逆ジオコーディングエラー: $e");
     }
     if (!mounted) return;
     setState(() {
@@ -224,7 +223,6 @@ class _SpotFormScreenState extends State<SpotFormScreen> {
     }
 
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 100));
 
     List<String> finalPaths = [];
     if (!_isWantToGoMode) {
